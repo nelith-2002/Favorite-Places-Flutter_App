@@ -1,11 +1,16 @@
+import 'package:favorite_places_app/providers/user_places.dart';
+import 'package:favorite_places_app/widgets/Places_list.dart';
 import 'package:flutter/material.dart';
 import 'package:favorite_places_app/screens/Add_place.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PlacesScreen extends StatelessWidget {
+class PlacesScreen extends ConsumerWidget {
   const PlacesScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userPlaces = ref.watch(userPlacesProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -16,14 +21,14 @@ class PlacesScreen extends StatelessWidget {
           IconButton(
             onPressed: () {
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const AddPlaceScreen()),
+                MaterialPageRoute(builder: (ctx) => const AddPlaceScreen()),
               );
             },
             icon: Icon(Icons.add),
           ),
         ],
       ),
-      // body: , //PlaceList
+      body: PlacesList(places: userPlaces),
     );
   }
 }
